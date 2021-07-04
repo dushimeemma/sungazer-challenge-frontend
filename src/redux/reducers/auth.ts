@@ -5,6 +5,7 @@ const initialState = {
   token: null,
   message: '',
   isLoading: false,
+  transactions: [],
 };
 
 export default (state = initialState, action: any) => {
@@ -19,6 +20,16 @@ export default (state = initialState, action: any) => {
         token: action.payload.token,
         message: action.payload.message,
       };
+    case types.LOGOUT_SUCCESS:
+      localStorage.removeItem('token');
+      return {
+        ...state,
+        isLoading: false,
+        user: {},
+        token: null,
+        message: '',
+        transactions: [],
+      };
     case types.SET_ERROR:
       return {
         ...state,
@@ -28,6 +39,26 @@ export default (state = initialState, action: any) => {
       return {
         ...state,
         isLoading: true,
+      };
+    case types.GET_TRANSACTIONS_BY_USER:
+      return {
+        ...state,
+        message: action.payload.message,
+        transactions: action.payload.transactions,
+        isLoading: false,
+      };
+    case types.DEPOSE_SUCCESS:
+    case types.WITHDRAW_SUCCESS:
+      return {
+        ...state,
+        message: action.payload.message,
+        isLoading: false,
+      };
+    case types.CLEAR_MESSAGE:
+      return {
+        ...state,
+        message: '',
+        isLoading: false,
       };
     default:
       return state;

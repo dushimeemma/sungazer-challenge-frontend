@@ -14,6 +14,11 @@ export interface Auth {
   password: string;
 }
 
+export interface Deposit {
+  description: string;
+  amount: any;
+}
+
 export const setLoading = () => {
   return {
     type: types.IS_LOADING,
@@ -44,4 +49,56 @@ export const loginUser = (user: Auth) => async (dispatch: any) => {
   } catch (error) {
     dispatch(setErrors(error.response.data.error));
   }
+};
+
+export const logout = () => async (dispatch: any) => {
+  dispatch(setLoading());
+  dispatch({
+    type: types.LOGOUT_SUCCESS,
+  });
+};
+
+export const getTransactionsByUser = () => async (dispatch: any) => {
+  dispatch(setLoading());
+  try {
+    const res = await axios.get('/api/transactions/user/transactions');
+    dispatch({
+      type: types.GET_TRANSACTIONS_BY_USER,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch(setErrors(error.response.data.error));
+  }
+};
+
+export const deposeAmount = (deposit: Deposit) => async (dispatch: any) => {
+  dispatch(setLoading());
+  try {
+    const res = await axios.post('/api/transactions/depose', deposit);
+    dispatch({
+      type: types.DEPOSE_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch(setErrors(error.response.data.error));
+  }
+};
+
+export const withdrawAmount = (withdraw: Deposit) => async (dispatch: any) => {
+  dispatch(setLoading());
+  try {
+    const res = await axios.post('/api/transactions/withdraw', withdraw);
+    dispatch({
+      type: types.WITHDRAW_SUCCESS,
+      payload: res.data,
+    });
+  } catch (error) {
+    dispatch(setErrors(error.response.data.error));
+  }
+};
+
+export const clearMessage = () => {
+  return {
+    type: types.CLEAR_MESSAGE,
+  };
 };
