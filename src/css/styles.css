@@ -1,0 +1,45 @@
+.min-height {
+  min-height: 100vh;
+  max-width: 100vw;
+}
+.top-div {
+  min-height: 80vh;
+}
+
+.card {
+  width: 80%;
+  margin: auto;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.m-auto {
+  margin: auto;
+  width: 80%;
+}
+.action {
+  width: 25px;
+  height: 25px;
+  border-radius: 0.2rem;
+}
+
+.spinner {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+}
