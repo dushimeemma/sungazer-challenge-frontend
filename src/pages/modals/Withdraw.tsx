@@ -45,10 +45,15 @@ const Withdraw = ({ toggle, className, buttonLabel, modal }: Props) => {
       description: withdraw.description,
       amount: parseInt(withdraw.amount),
     };
-    dispatch(withdrawAmount(newWithdraw));
     setTimeout(() => {
-      dispatch(getTransactionsByUser());
+      dispatch(withdrawAmount(newWithdraw));
     }, 500);
+    setTimeout(() => {
+      dispatch(clearMessage());
+      dispatch(clearErrors());
+      dispatch(getTransactionsByUser());
+      toggle();
+    }, 1500);
   };
 
   const handleClearErrors = () => {
@@ -114,7 +119,7 @@ const Withdraw = ({ toggle, className, buttonLabel, modal }: Props) => {
                 )}
                 <Input
                   label='Amount'
-                  type='text'
+                  type='number'
                   name='amount'
                   placeholder='amount'
                   labelFor='amount'
@@ -130,11 +135,9 @@ const Withdraw = ({ toggle, className, buttonLabel, modal }: Props) => {
                 <SubmitButton
                   classes='btn btn-primary'
                   type='submit'
-                  onClick={toggle}
                   isLoading={isLoading}
                   title='Withdraw'
                 />
-
                 <Button color='danger' onClick={toggle} type='button'>
                   Cancel
                 </Button>

@@ -7,7 +7,8 @@ import Sidebar from '../components/markup/Sidebar';
 import TH from '../components/TableHeader';
 import Depose from './modals/Depose';
 import Withdraw from './modals/Withdraw';
-import { getTransactionsByUser } from '../redux/actions/auth';
+import { getTransactionsByUser, clearMessage } from '../redux/actions/auth';
+import { clearErrors } from '../redux/actions/errors';
 
 const Transactions = () => {
   const history = useHistory();
@@ -20,9 +21,17 @@ const Transactions = () => {
       dispatch(getTransactionsByUser());
     }
   }, []);
-  const toggleDepose = () => setDeposeModal(!deposeModal);
+  const toggleDepose = () => {
+    dispatch(clearErrors());
+    dispatch(clearMessage());
+    setDeposeModal(!deposeModal);
+  };
 
-  const toggleWithdraw = () => setWithdrawModal(!withdrawModal);
+  const toggleWithdraw = () => {
+    dispatch(clearErrors());
+    dispatch(clearMessage());
+    setWithdrawModal(!withdrawModal);
+  };
 
   return (
     <Row className='min-height'>

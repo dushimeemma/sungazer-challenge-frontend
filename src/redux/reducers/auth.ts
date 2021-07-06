@@ -12,16 +12,15 @@ export default (state = initialState, action: any) => {
   switch (action.type) {
     case types.REGISTER_SUCCESS:
     case types.LOGIN_SUCCESS:
-      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         isLoading: false,
         user: action.payload.user,
         token: action.payload.token,
         message: action.payload.message,
+        transactions: [],
       };
     case types.LOGOUT_SUCCESS:
-      localStorage.removeItem('token');
       return {
         ...state,
         isLoading: false,

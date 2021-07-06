@@ -1,6 +1,9 @@
+import axios from 'axios';
+
 import { types } from './types';
 import { setErrors } from './errors';
-import axios from '../setAxios';
+
+import setAxios from '../setAxios';
 
 export interface User {
   name: string;
@@ -29,6 +32,7 @@ export const registerNewUser = (user: User) => async (dispatch: any) => {
   dispatch(setLoading());
   try {
     const res = await axios.post('/api/auth/signup', user);
+    localStorage.setItem('token', res.data.token);
     dispatch({
       type: types.REGISTER_SUCCESS,
       payload: res.data,
@@ -42,6 +46,7 @@ export const loginUser = (user: Auth) => async (dispatch: any) => {
   dispatch(setLoading());
   try {
     const res = await axios.post('/api/auth/login', user);
+    localStorage.setItem('token', res.data.token);
     dispatch({
       type: types.LOGIN_SUCCESS,
       payload: res.data,
@@ -53,6 +58,7 @@ export const loginUser = (user: Auth) => async (dispatch: any) => {
 
 export const logout = () => async (dispatch: any) => {
   dispatch(setLoading());
+  localStorage.removeItem('token');
   dispatch({
     type: types.LOGOUT_SUCCESS,
   });
@@ -60,6 +66,7 @@ export const logout = () => async (dispatch: any) => {
 
 export const getTransactionsByUser = () => async (dispatch: any) => {
   dispatch(setLoading());
+  setAxios();
   try {
     const res = await axios.get('/api/transactions/user/transactions');
     dispatch({
@@ -73,6 +80,7 @@ export const getTransactionsByUser = () => async (dispatch: any) => {
 
 export const deposeAmount = (deposit: Deposit) => async (dispatch: any) => {
   dispatch(setLoading());
+  setAxios();
   try {
     const res = await axios.post('/api/transactions/depose', deposit);
     dispatch({
@@ -86,6 +94,7 @@ export const deposeAmount = (deposit: Deposit) => async (dispatch: any) => {
 
 export const withdrawAmount = (withdraw: Deposit) => async (dispatch: any) => {
   dispatch(setLoading());
+  setAxios();
   try {
     const res = await axios.post('/api/transactions/withdraw', withdraw);
     dispatch({
