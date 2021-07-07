@@ -45,10 +45,16 @@ const Depose = ({ toggle, className, buttonLabel, modal }: Props) => {
       description: deposit.description,
       amount: parseInt(deposit.amount),
     };
-    dispatch(deposeAmount(newDeposit));
+
     setTimeout(() => {
-      dispatch(getTransactionsByUser());
+      dispatch(deposeAmount(newDeposit));
     }, 500);
+    setTimeout(() => {
+      dispatch(clearErrors());
+      dispatch(clearMessage());
+      dispatch(getTransactionsByUser());
+      toggle();
+    }, 1500);
   };
 
   const handleClearErrors = () => {
@@ -114,7 +120,7 @@ const Depose = ({ toggle, className, buttonLabel, modal }: Props) => {
                 )}
                 <Input
                   label='Amount'
-                  type='text'
+                  type='number'
                   name='amount'
                   placeholder='amount'
                   labelFor='amount'
@@ -130,7 +136,6 @@ const Depose = ({ toggle, className, buttonLabel, modal }: Props) => {
                 <SubmitButton
                   classes='btn btn-primary'
                   type='submit'
-                  onClick={toggle}
                   isLoading={isLoading}
                   title='Depose'
                 />

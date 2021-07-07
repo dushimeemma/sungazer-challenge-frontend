@@ -1,14 +1,11 @@
 import axios from 'axios';
 
-const token = localStorage.getItem('token');
-const url = 'https://sungazer-api.herokuapp.com';
-
-const setAxios = axios.create({
-  baseURL: url,
-  headers: {
-    'Content-Type': 'application/json',
-    'x-auth-token': token,
-  },
-});
-
+const setAxios = () => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    axios.defaults.headers.common['x-auth-token'] = token;
+  } else {
+    delete axios.defaults.headers.common['x-auth-token'];
+  }
+};
 export default setAxios;
